@@ -25,7 +25,7 @@ This is a RESTful API for a booking system built with Laravel 11. It allows you 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/laravel-booking-system.git
+    git clone https://github.com/akabuli/laravel-booking-test.git
     cd laravel-booking-system
     ```
 
