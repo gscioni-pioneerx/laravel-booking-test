@@ -1,0 +1,7 @@
+parameters:
+    level: 5
+    paths:
+        - app
+    excludePaths:
+        - app/Http/Middleware/Authenticate.php
+    checkMissingIterableValueType: false
