@@ -6,8 +6,6 @@ use App\Http\Resources\BookingResource;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 
-use function PHPSTORM_META\map;
-
 class BookingController extends Controller
 {
     /**
