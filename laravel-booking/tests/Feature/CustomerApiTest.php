@@ -102,4 +102,23 @@ class CustomerApiTest extends TestCase
             ]
         ]);
     }
+
+    /**
+     * Test customer destroy
+     */
+    public function test_customer_destroy(): void
+    {
+        Sanctum::actingAs(
+            User::factory()->create()
+        );
+
+        $customer = Customer::factory()->create();
+
+        $response = $this->deleteJson('/api/customer/' . $customer->id);
+
+        $response->assertStatus(204);
+        $this->assertDatabaseMissing('customers', [
+            'id' => $customer->id
+        ]);
+    }
 }
