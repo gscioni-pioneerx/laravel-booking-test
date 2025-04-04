@@ -6,6 +6,8 @@ use App\Http\Resources\BookingResource;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 
+use function PHPSTORM_META\map;
+
 class BookingController extends Controller
 {
     /**
@@ -32,7 +34,16 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'title' => 'required|string|max:255',
+            'checkin' => 'required|date|after_or_equal:today',
+            'checkout' => 'required|date|after:checkin'
+        ]);
+
+        $booking = Booking::create($validated);
+
+        return new BookingResource($booking);
     }
 
     /**
