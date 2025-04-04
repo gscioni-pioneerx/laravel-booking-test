@@ -86,4 +86,33 @@ class BookingApiTest extends TestCase
             ]
         ]);
     }
+
+    /**
+     * Test booking update
+     */
+    public function test_booking_update(): void
+    {
+        Sanctum::actingAs(
+            User::factory()->create()
+        );
+
+        $booking = Booking::factory()->create();
+
+        $checkInDate = fake()->dateTimeBetween('now', '+3 months');
+        $checkOutDate = (clone $checkInDate)->modify('+' . rand(1, 20) . ' days');
+
+        $updatedData = [
+            'checkin' => $checkInDate->format('Y-m-d H:i:s'),
+            'checkout' => $checkOutDate->format('Y-m-d H:i:s')
+        ];
+
+        $response = $this->putJson('/api/booking/' . $booking->id, $updatedData);
+
+        $response->assertOk()->assertJsonFragment([
+            'id' => $booking->id,
+            'title' => $booking->title,
+            'checkin' => $updatedData['checkin'],
+            'checkout' => $updatedData['checkout']
+        ]);
+    }
 }
