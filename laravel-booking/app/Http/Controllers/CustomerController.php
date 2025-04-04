@@ -63,7 +63,17 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'sometimes|required|string',
+            'surname' => 'sometimes|required|string',
+            'email' => 'sometimes|required|string|email|unique:customers',
+            'phone' => 'nullable|string',
+            'address' => 'nullable|string'
+        ]);
+
+        $customer->update($validated);
+
+        return new CustomerResource($customer);
     }
 
     /**
