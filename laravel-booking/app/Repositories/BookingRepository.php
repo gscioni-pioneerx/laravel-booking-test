@@ -4,9 +4,20 @@ namespace App\Repositories;
 
 use App\Models\Booking;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class BookingRepository
 {
+    /**
+     * List all booking items
+     *
+     * @return Collection
+     */
+    public function getAll(): Collection
+    {
+        return Booking::with('customer')->get();
+    }
+
     /**
      * Get all booking items
      *

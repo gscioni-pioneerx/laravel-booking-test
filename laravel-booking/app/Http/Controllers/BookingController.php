@@ -7,6 +7,8 @@ use App\Models\Booking;
 use App\Services\BookingService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class BookingController extends Controller
 {
@@ -76,5 +78,15 @@ class BookingController extends Controller
         $this->bookingService->delete($booking);
 
         return response()->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Export all the data in csv
+     */
+    public function export()
+    {
+        $filePath = $this->bookingService->exportCsv();
+
+        return response()->download($filePath, 'bookings.csv')->deleteFileAfterSend(true);
     }
 }
