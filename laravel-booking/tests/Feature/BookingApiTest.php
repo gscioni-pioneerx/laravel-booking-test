@@ -59,4 +59,31 @@ class BookingApiTest extends TestCase
             'checkout' => $bookingData['checkout']
         ]);
     }
+
+    /**
+     * Test booking show
+     */
+    public function test_booking_show(): void
+    {
+        Sanctum::actingAs(
+            User::factory()->create()
+        );
+
+        $booking = Booking::factory()->create();
+        $response = $this->getJson('/api/booking/' . $booking->id);
+
+        $response->assertOk()->assertJson([
+            'data' => [
+                'customer' => [
+                    'id' => $booking->customer->id,
+                    'name' => $booking->customer->name,
+                    'surname' => $booking->customer->surname,
+                    'email' => $booking->customer->email
+                ],
+                'title' => $booking->title,
+                'checkin' => $booking->checkin,
+                'checkout' => $booking->checkout
+            ]
+        ]);
+    }
 }
