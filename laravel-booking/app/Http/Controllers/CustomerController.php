@@ -29,7 +29,17 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'surname' => 'required|string',
+            'email' => 'required|string|email|unique:customers',
+            'phone' => 'nullable|string',
+            'address' => 'nullable|string'
+        ]);
+
+        $customer = Customer::create($validated);
+
+        return new CustomerResource($customer);
     }
 
     /**
