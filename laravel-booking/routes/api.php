@@ -9,5 +9,5 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::resource('/customer', CustomerController::class)->middleware('auth:sanctum');
-Route::resource('/booking', BookingController::class)->middleware('auth:sanctum');
+Route::apiResource('/customer', CustomerController::class)->middleware('auth:sanctum');
+Route::apiResource('/booking', BookingController::class)->middleware('auth:sanctum');
