@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Facades\AppLog;
 use App\Models\Customer;
 use App\Repositories\CustomerRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -43,7 +44,13 @@ class CustomerService
      */
     public function create(array $data): Customer
     {
-        return $this->repository->create($data);
+        $customer = $this->repository->create($data);
+
+        AppLog::info('User {user_id} created customer {customer_id}', [
+            'customer_id' => $customer->id
+        ]);
+
+        return $customer;
     }
 
     /**
@@ -55,7 +62,13 @@ class CustomerService
      */
     public function update(Customer $customer, array $data): Customer
     {
-        return $this->repository->update($customer, $data);
+        $customer = $this->repository->update($customer, $data);
+
+        AppLog::info('User {user_id} updated customer {customer_id}', [
+            'customer_id' => $customer->id
+        ]);
+
+        return $customer;
     }
 
     /**
@@ -67,6 +80,10 @@ class CustomerService
     public function delete(Customer $customer): void
     {
         $this->repository->delete($customer);
+
+        AppLog::info('User {user_id} deleted customer {customer_id}', [
+            'customer_id' => $customer->id
+        ]);
     }
 
     /**
@@ -82,6 +99,10 @@ class CustomerService
 
         $filePath = storage_path('app/' . $fileName);
         $file = fopen($filePath, 'w');
+
+        AppLog::info('User {user_id} requested customers csv {file_path}', [
+            'file_path' => $filePath
+        ]);
 
         fputcsv($file, [
             'ID',

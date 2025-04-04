@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Facades\AppLog;
 use App\Models\Booking;
 use App\Repositories\BookingRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -44,7 +45,14 @@ class BookingService
      */
     public function create(array $data): Booking
     {
-        return $this->repository->create($data);
+        $booking = $this->repository->create($data);
+
+        AppLog::info('User {user_id} created booking {booking_id} for customer {customer_id}', [
+            'booking_id' => $booking->id,
+            'customer_id' => $booking->customer->id
+        ]);
+
+        return $booking;
     }
 
     /**
@@ -56,7 +64,13 @@ class BookingService
      */
     public function update(Booking $booking, array $data): Booking
     {
-        return $this->repository->update($booking, $data);
+        $booking = $this->repository->update($booking, $data);
+
+        AppLog::info('User {user_id} updated booking {booking_id}', [
+            'booking_id' => $booking->id
+        ]);
+
+        return $booking;
     }
 
     /**
@@ -68,6 +82,10 @@ class BookingService
     public function delete(Booking $booking): void
     {
         $this->repository->delete($booking);
+
+        AppLog::info('User {user_id} deleted booking {booking_id}', [
+            'booking_id' => $booking->id
+        ]);
     }
 
     /**
@@ -83,6 +101,10 @@ class BookingService
 
         $filePath = storage_path('app/' . $fileName);
         $file = fopen($filePath, 'w');
+
+        AppLog::info('User {user_id} requested bookings csv export {file_path}', [
+            'file_path' => $filePath
+        ]);
 
         fputcsv($file, [
             'ID',
