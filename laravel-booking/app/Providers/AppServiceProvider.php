@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Repositories\BookingRepository;
 use App\Repositories\CustomerRepository;
+use App\Services\AppLogService;
 use App\Services\BookingService;
 use App\Services\CustomerService;
 use Illuminate\Contracts\Foundation\Application;
@@ -26,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
             return new CustomerService(
                 $app->make(CustomerRepository::class)
             );
+        });
+
+        $this->app->singleton(AppLogService::class, function (Application $app) {
+            return new AppLogService();
         });
     }
 
