@@ -121,4 +121,20 @@ class CustomerApiTest extends TestCase
             'id' => $customer->id
         ]);
     }
+
+    /**
+     * Test customers csv export
+     */
+    public function test_customers_export(): void
+    {
+        Sanctum::actingAs(
+            User::factory()->create()
+        );
+
+        Customer::factory()->count(10)->create();
+
+        $response = $this->getJson('/api/export/customers');
+
+        $response->assertOk()->assertDownload();
+    }
 }
