@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -43,7 +41,7 @@ class CustomerApiTest extends TestCase
             'surname' => fake()->lastName(),
             'email' => fake()->email(),
             'phone' => fake()->phoneNumber(),
-            'address' => fake()->address()
+            'address' => fake()->address(),
         ];
 
         $response = $this->post('/api/customer', $customerData);
@@ -61,7 +59,7 @@ class CustomerApiTest extends TestCase
         );
 
         $customer = Customer::factory()->create();
-        $response = $this->getJson('/api/customer/' . $customer->id);
+        $response = $this->getJson('/api/customer/'.$customer->id);
 
         $response->assertOk()->assertJson([
             'data' => [
@@ -69,8 +67,8 @@ class CustomerApiTest extends TestCase
                 'surname' => $customer->surname,
                 'email' => $customer->email,
                 'phone' => $customer->phone,
-                'address' => $customer->address
-            ]
+                'address' => $customer->address,
+            ],
         ]);
     }
 
@@ -86,10 +84,10 @@ class CustomerApiTest extends TestCase
         $customer = Customer::factory()->create();
         $updatedData = [
             'email' => fake()->email(),
-            'address' => fake()->address()
+            'address' => fake()->address(),
         ];
 
-        $response = $this->putJson('/api/customer/' . $customer->id, $updatedData);
+        $response = $this->putJson('/api/customer/'.$customer->id, $updatedData);
 
         $response->assertOk()->assertJson([
             'data' => [
@@ -98,8 +96,8 @@ class CustomerApiTest extends TestCase
                 'surname' => $customer->surname,
                 'email' => $updatedData['email'],
                 'phone' => $customer->phone,
-                'address' => $updatedData['address']
-            ]
+                'address' => $updatedData['address'],
+            ],
         ]);
     }
 
@@ -114,11 +112,11 @@ class CustomerApiTest extends TestCase
 
         $customer = Customer::factory()->create();
 
-        $response = $this->deleteJson('/api/customer/' . $customer->id);
+        $response = $this->deleteJson('/api/customer/'.$customer->id);
 
         $response->assertStatus(204);
         $this->assertDatabaseMissing('customers', [
-            'id' => $customer->id
+            'id' => $customer->id,
         ]);
     }
 

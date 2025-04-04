@@ -6,7 +6,6 @@ use App\Models\Booking;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -42,13 +41,13 @@ class BookingApiTest extends TestCase
         $customer = Customer::factory()->create();
 
         $checkInDate = fake()->dateTimeBetween('now', '+3 months');
-        $checkOutDate = (clone $checkInDate)->modify('+' . rand(1, 20) . ' days');
+        $checkOutDate = (clone $checkInDate)->modify('+'.rand(1, 20).' days');
 
         $bookingData = [
             'customer_id' => $customer->id,
             'title' => fake()->text(100),
             'checkin' => $checkInDate->format('Y-m-d H:i:s'),
-            'checkout' => $checkOutDate->format('Y-m-d H:i:s')
+            'checkout' => $checkOutDate->format('Y-m-d H:i:s'),
         ];
 
         $response = $this->postJson('/api/booking', $bookingData);
@@ -56,7 +55,7 @@ class BookingApiTest extends TestCase
         $response->assertStatus(201)->assertJsonFragment([
             'title' => $bookingData['title'],
             'checkin' => $bookingData['checkin'],
-            'checkout' => $bookingData['checkout']
+            'checkout' => $bookingData['checkout'],
         ]);
     }
 
@@ -70,7 +69,7 @@ class BookingApiTest extends TestCase
         );
 
         $booking = Booking::factory()->create();
-        $response = $this->getJson('/api/booking/' . $booking->id);
+        $response = $this->getJson('/api/booking/'.$booking->id);
 
         $response->assertOk()->assertJson([
             'data' => [
@@ -78,12 +77,12 @@ class BookingApiTest extends TestCase
                     'id' => $booking->customer->id,
                     'name' => $booking->customer->name,
                     'surname' => $booking->customer->surname,
-                    'email' => $booking->customer->email
+                    'email' => $booking->customer->email,
                 ],
                 'title' => $booking->title,
                 'checkin' => $booking->checkin,
-                'checkout' => $booking->checkout
-            ]
+                'checkout' => $booking->checkout,
+            ],
         ]);
     }
 
@@ -99,20 +98,20 @@ class BookingApiTest extends TestCase
         $booking = Booking::factory()->create();
 
         $checkInDate = fake()->dateTimeBetween('now', '+3 months');
-        $checkOutDate = (clone $checkInDate)->modify('+' . rand(1, 20) . ' days');
+        $checkOutDate = (clone $checkInDate)->modify('+'.rand(1, 20).' days');
 
         $updatedData = [
             'checkin' => $checkInDate->format('Y-m-d H:i:s'),
-            'checkout' => $checkOutDate->format('Y-m-d H:i:s')
+            'checkout' => $checkOutDate->format('Y-m-d H:i:s'),
         ];
 
-        $response = $this->putJson('/api/booking/' . $booking->id, $updatedData);
+        $response = $this->putJson('/api/booking/'.$booking->id, $updatedData);
 
         $response->assertOk()->assertJsonFragment([
             'id' => $booking->id,
             'title' => $booking->title,
             'checkin' => $updatedData['checkin'],
-            'checkout' => $updatedData['checkout']
+            'checkout' => $updatedData['checkout'],
         ]);
     }
 
@@ -126,11 +125,11 @@ class BookingApiTest extends TestCase
         );
 
         $booking = Booking::factory()->create();
-        $response = $this->deleteJson('/api/booking/' . $booking->id);
+        $response = $this->deleteJson('/api/booking/'.$booking->id);
 
         $response->assertStatus(204);
         $this->assertDatabaseMissing('bookings', [
-            'id' => $booking->id
+            'id' => $booking->id,
         ]);
     }
 

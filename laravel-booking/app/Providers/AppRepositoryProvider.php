@@ -15,11 +15,11 @@ class AppRepositoryProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(BookingRepository::class, function (Application $app) {
-            return new BookingRepository();
+            return new BookingRepository;
         });
 
         $this->app->singleton(CustomerRepository::class, function (Application $app) {
-            return new CustomerRepository();
+            return new CustomerRepository;
         });
     }
 

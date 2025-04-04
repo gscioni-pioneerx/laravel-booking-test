@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Booking;
 use App\Models\Customer;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BookingSeeder extends Seeder
@@ -22,7 +21,7 @@ class BookingSeeder extends Seeder
 
         foreach ($customers as $customer) {
             Booking::factory()->count(rand(1, 10))->create([
-                'customer_id' => $customer->id
+                'customer_id' => $customer->id,
             ]);
         }
     }

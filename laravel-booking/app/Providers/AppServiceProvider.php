@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(AppLogService::class, function (Application $app) {
-            return new AppLogService();
+            return new AppLogService;
         });
     }
 

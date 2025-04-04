@@ -24,7 +24,7 @@ class CustomerFactory extends Factory
             'surname' => fake()->lastName(),
             'email' => fake()->email(),
             'phone' => fake()->phoneNumber(),
-            'address' => fake()->address()
+            'address' => fake()->address(),
         ];
     }
 }

@@ -10,8 +10,6 @@ class BookingRepository
 {
     /**
      * List all booking items
-     *
-     * @return Collection
      */
     public function getAll(): Collection
     {
@@ -21,8 +19,7 @@ class BookingRepository
     /**
      * Get all booking items
      *
-     * @param int $perPage
-     * @return LengthAwarePaginator
+     * @param  int  $perPage
      */
     public function paginate($perPage = 10): LengthAwarePaginator
     {
@@ -31,9 +28,6 @@ class BookingRepository
 
     /**
      * Find a booking item by id
-     *
-     * @param int $id
-     * @return Booking|null
      */
     public function find(int $id): ?Booking
     {
@@ -42,9 +36,6 @@ class BookingRepository
 
     /**
      * Create a new booking item
-     *
-     * @param array $data
-     * @return Booking
      */
     public function create(array $data): Booking
     {
@@ -53,10 +44,6 @@ class BookingRepository
 
     /**
      * Update a booking item
-     *
-     * @param Booking $booking
-     * @param array $data
-     * @return Booking
      */
     public function update(Booking $booking, array $data): Booking
     {
@@ -67,9 +54,6 @@ class BookingRepository
 
     /**
      * Delete a booking item
-     *
-     * @param Booking $booking
-     * @return void
      */
     public function delete(Booking $booking): void
     {

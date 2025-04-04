@@ -6,20 +6,17 @@ use App\Facades\AppLog;
 use App\Models\Booking;
 use App\Repositories\BookingRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 
 class BookingService
 {
     public function __construct(
         protected BookingRepository $repository
-    ) {
-    }
+    ) {}
 
     /**
      * Paginate booking items
      *
-     * @param int $perPage
-     * @return LengthAwarePaginator
+     * @param  int  $perPage
      */
     public function list($perPage = 10): LengthAwarePaginator
     {
@@ -28,9 +25,6 @@ class BookingService
 
     /**
      * Get a booking item
-     *
-     * @param int $id
-     * @return Booking|null
      */
     public function get(int $id): ?Booking
     {
@@ -39,9 +33,6 @@ class BookingService
 
     /**
      * Create a booking item
-     *
-     * @param array $data
-     * @return Booking
      */
     public function create(array $data): Booking
     {
@@ -49,7 +40,7 @@ class BookingService
 
         AppLog::info('User {user_id} created booking {booking_id} for customer {customer_id}', [
             'booking_id' => $booking->id,
-            'customer_id' => $booking->customer->id
+            'customer_id' => $booking->customer->id,
         ]);
 
         return $booking;
@@ -57,17 +48,13 @@ class BookingService
 
     /**
      * Update a booking item
-     *
-     * @param Booking $booking
-     * @param array $data
-     * @return Booking
      */
     public function update(Booking $booking, array $data): Booking
     {
         $booking = $this->repository->update($booking, $data);
 
         AppLog::info('User {user_id} updated booking {booking_id}', [
-            'booking_id' => $booking->id
+            'booking_id' => $booking->id,
         ]);
 
         return $booking;
@@ -76,7 +63,6 @@ class BookingService
     /**
      * Delete a booking item
      *
-     * @param Booking $booking
      * @return string
      */
     public function delete(Booking $booking): void
@@ -84,26 +70,23 @@ class BookingService
         $this->repository->delete($booking);
 
         AppLog::info('User {user_id} deleted booking {booking_id}', [
-            'booking_id' => $booking->id
+            'booking_id' => $booking->id,
         ]);
     }
 
     /**
      * Export bookings as csv
-     *
-     * @param string|null $fileName
-     * @return string
      */
     public function exportCsv(?string $fileName = null): string
     {
-        $fileName = $fileName ?? 'bookings_' . time() . '.csv';
+        $fileName = $fileName ?? 'bookings_'.time().'.csv';
         $bookings = $this->repository->getAll();
 
-        $filePath = storage_path('app/' . $fileName);
+        $filePath = storage_path('app/'.$fileName);
         $file = fopen($filePath, 'w');
 
         AppLog::info('User {user_id} requested bookings csv export {file_path}', [
-            'file_path' => $filePath
+            'file_path' => $filePath,
         ]);
 
         fputcsv($file, [
@@ -114,7 +97,7 @@ class BookingService
             'Check-in',
             'Check-out',
             'Status',
-            'Creation Date'
+            'Creation Date',
         ]);
 
         foreach ($bookings as $booking) {
@@ -123,13 +106,13 @@ class BookingService
 
             fputcsv($file, [
                 $booking->id,
-                $booking->customer->name . ' ' . $booking->customer->surname,
+                $booking->customer->name.' '.$booking->customer->surname,
                 $booking->customer->email,
                 $booking->title,
                 $checkin,
                 $checkout,
                 $booking->status,
-                $booking->created_at
+                $booking->created_at,
             ]);
         }
 

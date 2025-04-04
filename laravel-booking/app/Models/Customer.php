@@ -15,7 +15,7 @@ class Customer extends Model
         'surname',
         'email',
         'phone',
-        'address'
+        'address',
     ];
 
     public function bookings(): HasMany

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status', [
                 'pending',
                 'confirmed',
-                'cancelled'
+                'cancelled',
             ])->default('pending');
             $table->timestamps();
         });

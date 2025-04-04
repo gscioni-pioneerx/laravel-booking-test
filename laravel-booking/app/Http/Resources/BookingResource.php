@@ -20,13 +20,13 @@ class BookingResource extends JsonResource
                 'id' => $this->customer->id,
                 'name' => $this->customer->name,
                 'surname' => $this->customer->surname,
-                'email' => $this->customer->email
+                'email' => $this->customer->email,
             ],
             'title' => $this->title,
             'checkin' => $this->checkin,
             'checkout' => $this->checkout,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }

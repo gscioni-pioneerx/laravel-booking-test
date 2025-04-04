@@ -8,14 +8,11 @@ class AppLogService
 {
     /**
      * Prepare log context
-     *
-     * @param array $context
-     * @return array
      */
     protected function prepareContext(array $context = []): array
     {
         $defaultContext = [
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
         ];
 
         return array_merge($defaultContext, $context);
@@ -23,10 +20,6 @@ class AppLogService
 
     /**
      * Create emergency level log
-     *
-     * @param string $message
-     * @param array $context
-     * @return void
      */
     public function emergency(string $message, array $context = []): void
     {
@@ -37,10 +30,6 @@ class AppLogService
 
     /**
      * Create alert level log
-     *
-     * @param string $message
-     * @param array $context
-     * @return void
      */
     public function alert(string $message, array $context = []): void
     {
@@ -51,10 +40,6 @@ class AppLogService
 
     /**
      * Create critical level log
-     *
-     * @param string $message
-     * @param array $context
-     * @return void
      */
     public function critical(string $message, array $context = []): void
     {
@@ -65,10 +50,6 @@ class AppLogService
 
     /**
      * Create error level log
-     *
-     * @param string $message
-     * @param array $context
-     * @return void
      */
     public function error(string $message, array $context = []): void
     {
@@ -79,10 +60,6 @@ class AppLogService
 
     /**
      * Create warning level log
-     *
-     * @param string $message
-     * @param array $context
-     * @return void
      */
     public function warning(string $message, array $context = []): void
     {
@@ -93,10 +70,6 @@ class AppLogService
 
     /**
      * Create notice level log
-     *
-     * @param string $message
-     * @param array $context
-     * @return void
      */
     public function notice(string $message, array $context = []): void
     {
@@ -107,10 +80,6 @@ class AppLogService
 
     /**
      * Create info level log
-     *
-     * @param string $message
-     * @param array $context
-     * @return void
      */
     public function info(string $message, array $context = []): void
     {
@@ -121,10 +90,6 @@ class AppLogService
 
     /**
      * Create debug level log
-     *
-     * @param string $message
-     * @param array $context
-     * @return void
      */
     public function debug(string $message, array $context = []): void
     {

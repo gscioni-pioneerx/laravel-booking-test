@@ -14,7 +14,7 @@ class Booking extends Model
         'customer_id',
         'title',
         'checkin',
-        'checkout'
+        'checkout',
     ];
 
     public function customer(): BelongsTo

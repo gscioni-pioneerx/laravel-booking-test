@@ -8,14 +8,12 @@ use App\Services\BookingService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class BookingController extends Controller
 {
     public function __construct(
         protected BookingService $bookingService
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -37,7 +35,7 @@ class BookingController extends Controller
             'customer_id' => 'required|exists:customers,id',
             'title' => 'required|string|max:255',
             'checkin' => 'required|date|after_or_equal:today',
-            'checkout' => 'required|date|after:checkin'
+            'checkout' => 'required|date|after:checkin',
         ]);
 
         $booking = $this->bookingService->create($validated);
@@ -62,7 +60,7 @@ class BookingController extends Controller
             'customer_id' => 'sometimes|required|exists:customers,id',
             'title' => 'sometimes|required|max:255',
             'checkin' => 'sometimes|required|date|after_or_equal:today',
-            'checkout' => 'sometimes|required|date|after:checkin'
+            'checkout' => 'sometimes|required|date|after:checkin',
         ]);
 
         $this->bookingService->update($booking, $validated);

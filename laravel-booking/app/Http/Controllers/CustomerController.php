@@ -12,8 +12,7 @@ class CustomerController extends Controller
 {
     public function __construct(
         protected CustomerService $customerService
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -36,7 +35,7 @@ class CustomerController extends Controller
             'surname' => 'required|string',
             'email' => 'required|string|email|unique:customers',
             'phone' => 'nullable|string',
-            'address' => 'nullable|string'
+            'address' => 'nullable|string',
         ]);
 
         $customer = $this->customerService->create($validated);
@@ -62,7 +61,7 @@ class CustomerController extends Controller
             'surname' => 'sometimes|required|string',
             'email' => 'sometimes|required|string|email|unique:customers',
             'phone' => 'nullable|string',
-            'address' => 'nullable|string'
+            'address' => 'nullable|string',
         ]);
 
         $this->customerService->update($customer, $validated);
