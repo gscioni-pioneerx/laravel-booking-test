@@ -51,7 +51,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
+        return new BookingResource($booking);
     }
 
     /**
