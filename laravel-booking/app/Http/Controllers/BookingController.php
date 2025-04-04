@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
+use App\Services\BookingService;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
+    public function __construct(
+        protected BookingService $bookingService
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 12);
-        $bookings = Booking::paginate($perPage);
+        $bookings = $this->bookingService->list($perPage);
 
         return BookingResource::collection($bookings);
     }
@@ -39,7 +45,7 @@ class BookingController extends Controller
             'checkout' => 'required|date|after:checkin'
         ]);
 
-        $booking = Booking::create($validated);
+        $booking = $this->bookingService->create($validated);
 
         return new BookingResource($booking);
     }
@@ -72,7 +78,7 @@ class BookingController extends Controller
             'checkout' => 'sometimes|required|date|after:checkin'
         ]);
 
-        $booking->update($validated);
+        $this->bookingService->update($booking, $validated);
 
         return new BookingResource($booking);
     }
@@ -82,7 +88,7 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        $booking->delete();
+        $this->bookingService->delete($booking);
 
         return response()->json([
             'message' => 'Booking deleted successfully.'
