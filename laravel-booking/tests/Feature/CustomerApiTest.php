@@ -73,4 +73,33 @@ class CustomerApiTest extends TestCase
             ]
         ]);
     }
+
+    /**
+     * Test customer update
+     */
+    public function test_customer_update(): void
+    {
+        Sanctum::actingAs(
+            User::factory()->create()
+        );
+
+        $customer = Customer::factory()->create();
+        $updatedData = [
+            'email' => fake()->email(),
+            'address' => fake()->address()
+        ];
+
+        $response = $this->putJson('/api/customer/' . $customer->id, $updatedData);
+
+        $response->assertOk()->assertJson([
+            'data' => [
+                'id' => $customer->id,
+                'name' => $customer->name,
+                'surname' => $customer->surname,
+                'email' => $updatedData['email'],
+                'phone' => $customer->phone,
+                'address' => $updatedData['address']
+            ]
+        ]);
+    }
 }
