@@ -133,4 +133,20 @@ class BookingApiTest extends TestCase
             'id' => $booking->id
         ]);
     }
+
+    /**
+     * Test bookings export
+     */
+    public function test_bookings_export(): void
+    {
+        Sanctum::actingAs(
+            User::factory()->create()
+        );
+
+        Booking::factory()->count(10)->create();
+
+        $response = $this->getJson('/api/export/bookings');
+
+        $response->assertOk()->assertDownload();
+    }
 }
