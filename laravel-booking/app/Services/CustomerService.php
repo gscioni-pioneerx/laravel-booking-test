@@ -13,31 +13,68 @@ class CustomerService
     ) {
     }
 
+    /**
+     * Paginate customers
+     *
+     * @param integer $perPage
+     * @return LengthAwarePaginator
+     */
     public function list($perPage = 10): LengthAwarePaginator
     {
         return $this->repository->paginate($perPage);
     }
 
+    /**
+     * Get a customer
+     *
+     * @param int $id
+     * @return Customer|null
+     */
     public function get(int $id): ?Customer
     {
         return $this->repository->find($id);
     }
 
+    /**
+     * Create a customer
+     *
+     * @param array $data
+     * @return Customer
+     */
     public function create(array $data): Customer
     {
         return $this->repository->create($data);
     }
 
+    /**
+     * Update a customer
+     *
+     * @param Customer $customer
+     * @param array $data
+     * @return Customer
+     */
     public function update(Customer $customer, array $data): Customer
     {
         return $this->repository->update($customer, $data);
     }
 
+    /**
+     * Delete a customer
+     *
+     * @param Customer $customer
+     * @return void
+     */
     public function delete(Customer $customer): void
     {
         $this->repository->delete($customer);
     }
 
+    /**
+     * Export customers as csv
+     *
+     * @param string|null $fileName
+     * @return string
+     */
     public function exportCsv(?string $fileName = null): string
     {
         $fileName = $fileName ?? 'customers_' . time() . '.csv';
