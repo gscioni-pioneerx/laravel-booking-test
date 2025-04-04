@@ -4,18 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
+use App\Services\CustomerService;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    public function __construct(
+        protected CustomerService $customerService
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 12);
+        $customers = $this->customerService->list($perPage);
 
-        return CustomerResource::collection(Customer::paginate($perPage));
+        return CustomerResource::collection($customers);
     }
 
     /**
@@ -39,7 +46,7 @@ class CustomerController extends Controller
             'address' => 'nullable|string'
         ]);
 
-        $customer = Customer::create($validated);
+        $customer = $this->customerService->create($validated);
 
         return new CustomerResource($customer);
     }
@@ -73,7 +80,7 @@ class CustomerController extends Controller
             'address' => 'nullable|string'
         ]);
 
-        $customer->update($validated);
+        $this->customerService->update($customer, $validated);
 
         return new CustomerResource($customer);
     }
@@ -83,7 +90,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        $customer->delete();
+        $this->customerService->delete($customer);
 
         return response()->json([
             'message' => 'Customer deleted successfully.'
