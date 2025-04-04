@@ -10,6 +10,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::apiResource('/customer', CustomerController::class)->middleware('auth:sanctum');
+Route::get('/customer/{customer}/bookings', [CustomerController::class, 'bookings'])->middleware('auth:sanctum');
+
 Route::apiResource('/booking', BookingController::class)->middleware('auth:sanctum');
 
 Route::get('/export/customers', [CustomerController::class, 'export'])->middleware('auth:sanctum');

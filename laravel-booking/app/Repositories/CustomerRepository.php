@@ -59,4 +59,12 @@ class CustomerRepository
     {
         $customer->delete();
     }
+
+    /**
+     * Get paginated customer's bookings
+     */
+    public function paginateBookings(Customer $customer, int $perPage = 10): LengthAwarePaginator
+    {
+        return $customer->bookings()->paginate($perPage);
+    }
 }

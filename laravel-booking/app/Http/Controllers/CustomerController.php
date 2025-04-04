@@ -88,4 +88,15 @@ class CustomerController extends Controller
 
         return response()->download($filePath, 'customers.csv')->deleteFileAfterSend(true);
     }
+
+    /**
+     * Display the customer's bookings
+     */
+    public function bookings(Request $request, Customer $customer)
+    {
+        $perPage = $request->get('per_page', 10);
+        $bookings = $this->customerService->listBookings($customer, $perPage);
+
+        return new CustomerResource($bookings);
+    }
 }

@@ -110,4 +110,12 @@ class CustomerService
 
         return $filePath;
     }
+
+    /**
+     * Paginate customer's bookings
+     */
+    public function listBookings(Customer $customer, int $perPage = 10): LengthAwarePaginator
+    {
+        return $this->repository->paginateBookings($customer, $perPage);
+    }
 }

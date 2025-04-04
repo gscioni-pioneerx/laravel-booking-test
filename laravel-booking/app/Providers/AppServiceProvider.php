@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Customer;
 use App\Repositories\BookingRepository;
 use App\Repositories\CustomerRepository;
 use App\Services\AppLogService;
 use App\Services\BookingService;
 use App\Services\CustomerService;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
