@@ -28,4 +28,26 @@ class CustomerApiTest extends TestCase
         $response = $this->get('/api/customer');
         $response->assertOk()->assertJsonCount(5, 'data');
     }
+
+    /**
+     * Test customer store
+     */
+    public function test_customer_store(): void
+    {
+        Sanctum::actingAs(
+            User::factory()->create()
+        );
+
+        $customerData = [
+            'name' => fake()->firstName(),
+            'surname' => fake()->lastName(),
+            'email' => fake()->email(),
+            'phone' => fake()->phoneNumber(),
+            'address' => fake()->address()
+        ];
+
+        $response = $this->post('/api/customer', $customerData);
+
+        $response->assertStatus(201)->assertJsonFragment($customerData);
+    }
 }
