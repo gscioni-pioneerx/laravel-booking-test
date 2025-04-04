@@ -21,13 +21,13 @@ class BookingFactory extends Factory
     public function definition(): array
     {
         $checkInDate = fake()->dateTimeBetween('now', '+3 months');
-        $checkOutDate = $checkInDate->modify('+' . rand(1, 20) . ' days');
+        $checkOutDate = (clone $checkInDate)->modify('+' . rand(1, 20) . ' days');
 
         return [
             'customer_id' => Customer::factory(),
             'title' => fake()->title(),
-            'checkin' => $checkInDate,
-            'checkout' => $checkOutDate
+            'checkin' => $checkInDate->format('Y-m-d H:i:s'),
+            'checkout' => $checkOutDate->format('Y-m-d H:i:s')
         ];
     }
 }
