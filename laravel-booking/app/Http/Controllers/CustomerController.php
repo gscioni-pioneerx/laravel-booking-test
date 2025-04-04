@@ -11,9 +11,11 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return CustomerResource::collection(Customer::paginate(10));
+        $perPage = $request->get('per_page', 12);
+
+        return CustomerResource::collection(Customer::paginate($perPage));
     }
 
     /**
