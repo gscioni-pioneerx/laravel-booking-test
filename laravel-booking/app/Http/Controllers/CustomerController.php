@@ -79,4 +79,14 @@ class CustomerController extends Controller
 
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
+
+    /**
+     * Export all the data in csv
+     */
+    public function export()
+    {
+        $filePath = $this->customerService->exportCsv();
+
+        return response()->download($filePath, 'customers.csv')->deleteFileAfterSend(true);
+    }
 }

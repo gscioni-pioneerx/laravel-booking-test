@@ -37,4 +37,39 @@ class CustomerService
     {
         $this->repository->delete($customer);
     }
+
+    public function exportCsv(?string $fileName = null): string
+    {
+        $fileName = $fileName ?? 'customers_' . time() . '.csv';
+        $customers = $this->repository->getAll();
+
+        $filePath = storage_path('app/' . $fileName);
+        $file = fopen($filePath, 'w');
+
+        fputcsv($file, [
+            'ID',
+            'Name',
+            'Surname',
+            'Email',
+            'Phone',
+            'Address',
+            'Creation Date'
+        ]);
+
+        foreach ($customers as $customer) {
+            fputcsv($file, [
+                $customer->id,
+                $customer->name,
+                $customer->surname,
+                $customer->email,
+                $customer->phone,
+                $customer->password,
+                $customer->created_at
+            ]);
+        }
+
+        fclose($file);
+
+        return $filePath;
+    }
 }

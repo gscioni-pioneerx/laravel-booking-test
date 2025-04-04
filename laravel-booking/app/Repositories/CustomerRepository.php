@@ -4,11 +4,22 @@ namespace App\Repositories;
 
 use App\Models\Customer;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class CustomerRepository
 {
     /**
      * Get all customers
+     *
+     * @return Collection
+     */
+    public function getAll(): Collection
+    {
+        return Customer::get();
+    }
+
+    /**
+     * Paginate customers
      *
      * @param int $perPage
      * @return LengthAwarePaginator
