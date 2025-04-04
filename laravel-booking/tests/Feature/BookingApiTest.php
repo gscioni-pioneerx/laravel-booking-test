@@ -115,4 +115,22 @@ class BookingApiTest extends TestCase
             'checkout' => $updatedData['checkout']
         ]);
     }
+
+    /**
+     * Test booking delete
+     */
+    public function test_booking_delete(): void
+    {
+        Sanctum::actingAs(
+            User::factory()->create()
+        );
+
+        $booking = Booking::factory()->create();
+        $response = $this->deleteJson('/api/booking/' . $booking->id);
+
+        $response->assertStatus(204);
+        $this->assertDatabaseMissing('bookings', [
+            'id' => $booking->id
+        ]);
+    }
 }
