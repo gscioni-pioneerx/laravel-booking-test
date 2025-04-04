@@ -6,6 +6,7 @@ use App\Http\Resources\BookingResource;
 use App\Models\Booking;
 use App\Services\BookingService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BookingController extends Controller
 {
@@ -90,8 +91,6 @@ class BookingController extends Controller
     {
         $this->bookingService->delete($booking);
 
-        return response()->json([
-            'message' => 'Booking deleted successfully.'
-        ], 204);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

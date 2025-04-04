@@ -6,6 +6,7 @@ use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CustomerController extends Controller
 {
@@ -92,8 +93,6 @@ class CustomerController extends Controller
     {
         $this->customerService->delete($customer);
 
-        return response()->json([
-            'message' => 'Customer deleted successfully.'
-        ], 204);
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
