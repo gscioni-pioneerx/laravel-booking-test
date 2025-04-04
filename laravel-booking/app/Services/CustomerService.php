@@ -15,10 +15,8 @@ class CustomerService
 
     /**
      * Paginate customers
-     *
-     * @param  int  $perPage
      */
-    public function list($perPage = 10): LengthAwarePaginator
+    public function list(int $perPage = 10): LengthAwarePaginator
     {
         return $this->repository->paginate($perPage);
     }
