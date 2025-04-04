@@ -67,7 +67,16 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        $validated = $request->validate([
+            'customer_id' => 'sometimes|required|exists:customers,id',
+            'title' => 'sometimes|required|max:255',
+            'checkin' => 'sometimes|required|date|after_or_equal:today',
+            'checkout' => 'sometimes|required|date|after:checkin'
+        ]);
+
+        $booking->update($validated);
+
+        return new BookingResource($booking);
     }
 
     /**
