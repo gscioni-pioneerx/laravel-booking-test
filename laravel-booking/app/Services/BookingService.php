@@ -62,8 +62,6 @@ class BookingService
 
     /**
      * Delete a booking item
-     *
-     * @return string
      */
     public function delete(Booking $booking): void
     {
