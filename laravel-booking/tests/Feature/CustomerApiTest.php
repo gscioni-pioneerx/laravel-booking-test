@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Booking;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -134,5 +135,29 @@ class CustomerApiTest extends TestCase
         $response = $this->getJson('/api/export/customers');
 
         $response->assertOk()->assertDownload();
+    }
+
+    /**
+     * Test customer's booking list
+     */
+    public function test_customers_booking(): void
+    {
+        Sanctum::actingAs(
+            User::factory()->create()
+        );
+
+        $customerA = Customer::factory()->create();
+        $customerB = Customer::factory()->create();
+
+        $bookingsA = Booking::factory()->count(7)->create([
+            'customer_id' => $customerA->id
+        ]);
+        $bookingsB = Booking::factory()->count(3)->create([
+            'customer_id' => $customerB->id
+        ]);
+
+        $response = $this->getJson('/api/customer/' . $customerA->id . '/bookings');
+
+        $response->assertOk()->assertJsonCount(7, 'data');
     }
 }
