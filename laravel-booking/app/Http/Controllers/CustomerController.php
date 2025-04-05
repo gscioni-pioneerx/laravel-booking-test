@@ -97,6 +97,6 @@ class CustomerController extends Controller
         $perPage = $request->get('per_page', 10);
         $bookings = $this->customerService->listBookings($customer, $perPage);
 
-        return new CustomerResource($bookings);
+        return response()->json($bookings);
     }
 }
