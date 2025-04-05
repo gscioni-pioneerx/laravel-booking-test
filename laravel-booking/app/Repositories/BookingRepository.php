@@ -10,6 +10,8 @@ class BookingRepository
 {
     /**
      * List all booking items
+     *
+     * @return Collection<Booking>
      */
     public function getAll(): Collection
     {

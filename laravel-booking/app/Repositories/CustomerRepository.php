@@ -10,6 +10,8 @@ class CustomerRepository
 {
     /**
      * Get all customers
+     *
+     * @return Collection<Customer>
      */
     public function getAll(): Collection
     {
