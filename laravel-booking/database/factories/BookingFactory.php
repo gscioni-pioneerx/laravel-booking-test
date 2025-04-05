@@ -25,7 +25,7 @@ class BookingFactory extends Factory
 
         return [
             'customer_id' => Customer::factory(),
-            'title' => fake()->title(),
+            'title' => fake()->text(100),
             'checkin' => $checkInDate->format('Y-m-d H:i:s'),
             'checkout' => $checkOutDate->format('Y-m-d H:i:s'),
         ];
