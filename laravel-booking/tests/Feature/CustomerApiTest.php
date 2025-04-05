@@ -150,13 +150,13 @@ class CustomerApiTest extends TestCase
         $customerB = Customer::factory()->create();
 
         $bookingsA = Booking::factory()->count(7)->create([
-            'customer_id' => $customerA->id
+            'customer_id' => $customerA->id,
         ]);
         $bookingsB = Booking::factory()->count(3)->create([
-            'customer_id' => $customerB->id
+            'customer_id' => $customerB->id,
         ]);
 
-        $response = $this->getJson('/api/customer/' . $customerA->id . '/bookings');
+        $response = $this->getJson('/api/customer/'.$customerA->id.'/bookings');
 
         $response->assertOk()->assertJsonCount(7, 'data');
     }
