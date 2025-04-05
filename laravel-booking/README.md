@@ -1,66 +1,171 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Booking
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Booking System REST API
 
-## About Laravel
+## Requirements
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP >=8.2
+- Docker
+- Composer
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Customers and Bookings CRUD API
+- CSV Export
+- Docker support with Laravel Sail
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+First of all, clone the repository and cd into the laravel-booking directory
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```
+git clone https://github.com/gspataro/laravel-booking-test.git
+cd laravel-booking
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Now, let's install dependencies
 
-## Laravel Sponsors
+```
+composer install
+npm install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+This project uses Docker and Laravel Sail. To run the docker container, run the following command:
 
-### Premium Partners
+```
+./vendor/bin/sail up
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Now you can run the migrations
 
-## Contributing
+```
+./vendor/bin/sail migrate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+If you want to run the seeder with the migrations, run this command instead
 
-## Code of Conduct
+```
+./vendor/bin/sail migrate --seed
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## API Documentation
 
-## Security Vulnerabilities
+All the endpoints requires authentication first.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+You can create your own user and login using the Authentication paragraph of this documentation. On login, the system will respond with a bearer token that you can use to access the other endpoints.
 
-## License
+### Authentication
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### `POST` /api/register
+
+**Request Body**
+
+- name @string
+- email @string
+- password @string
+
+#### `POST` /api/login
+
+**Request Body**
+
+- email @string
+- password @string
+
+#### `POST` /api/logout
+
+### Customer
+
+#### `GET` /api/customer/
+
+**Query Params**
+
+- per_page @int
+- page @int
+
+#### `GET` /api/customer/{id}
+
+#### `POST` /api/customer
+
+**Request Body**
+
+- name @string
+- surname @string
+- email @string
+- phone @string
+- address @string
+
+#### `PUT` /api/customer/{id}
+
+**Request Body**
+
+- name @string
+- surname @string
+- email @string
+- phone @string
+- address @string
+
+#### `DELETE` /api/customer/{id}
+
+#### `GET` /api/customer/{id}/bookings
+
+**Query Params**
+
+- per_page @int
+- page @int
+
+### Booking
+
+#### `GET` /api/booking/
+
+**Query Params**
+
+- per_page @int
+- page @int
+
+#### `GET` /api/booking/{id}
+
+#### `POST` /api/booking
+
+**Request Body**
+
+- customer_id @int
+- title @string
+- checkint @datetime
+- checkout @datetime
+
+#### `PUT` /api/booking/{id}
+
+**Request Body**
+
+- customer_id @int
+- title @string
+- checkint @datetime
+- checkout @datetime
+
+#### `DELETE` /api/booking/{id}
+
+### Export
+
+#### `GET` /api/export/customers
+
+#### `GET` /api/export/bookings
+
+## Testing
+
+To run the test suite:
+
+```
+./vendor/bin/sail artisan test
+```
+
+To run static analysis with PHPStan and Larastan:
+
+```
+./vendor/bin/phpstan analyse
+```
+
+To run code linting with laravel pint:
+
+```
+./vendor/bin/pint
+```
