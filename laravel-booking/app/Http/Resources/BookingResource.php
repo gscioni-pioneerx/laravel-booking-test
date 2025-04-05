@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int $id
  * @property object $customer
  * @property string $title
+ * @property string $status
  * @property string $checkin
  * @property string $checkout
  * @property string $created_at
@@ -34,6 +35,7 @@ class BookingResource extends JsonResource
                 'email' => $this->customer->email,
             ],
             'title' => $this->title,
+            'status' => $this->status,
             'checkin' => $this->checkin,
             'checkout' => $this->checkout,
             'created_at' => $this->created_at,

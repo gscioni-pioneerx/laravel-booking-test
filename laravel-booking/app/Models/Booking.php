@@ -24,6 +24,7 @@ class Booking extends Model
     protected $fillable = [
         'customer_id',
         'title',
+        'status',
         'checkin',
         'checkout',
     ];

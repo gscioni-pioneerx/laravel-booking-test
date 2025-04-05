@@ -130,6 +130,7 @@ You can create your own user and login using the Authentication paragraph of thi
 
 - customer_id @int
 - title @string
+- status @enum(pending|confirmed|cancelled)
 - checkint @datetime
 - checkout @datetime
 
@@ -139,6 +140,7 @@ You can create your own user and login using the Authentication paragraph of thi
 
 - customer_id @int
 - title @string
+- status @enum(pending|confirmed|cancelled)
 - checkint @datetime
 - checkout @datetime
 
