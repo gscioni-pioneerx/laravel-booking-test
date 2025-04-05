@@ -5,6 +5,17 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * App\Http\Resources
+ *
+ * @property int $id
+ * @property object $customer
+ * @property string $title
+ * @property string $checkin
+ * @property string $checkout
+ * @property string $created_at
+ * @property string $updated_at
+ */
 class BookingResource extends JsonResource
 {
     /**
