@@ -97,7 +97,7 @@ You can replace `"php artisan cache:clear"` with any custom script or artisan co
 
 ## ✅ Features
 
-- Laravel 10 + PHP 8.1+
+- Laravel 12 + PHP 8.3+
 - Dockerized setup with MySQL
 - Repository pattern
 - Sanctum authentication (optional)
