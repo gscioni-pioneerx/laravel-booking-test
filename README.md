@@ -1,115 +1,107 @@
-# Laravel Booking Test
+# 📦 Booking System API
 
-Questo repository contiene il test tecnico per la selezione di sviluppatori PHP con esperienza in Laravel 11.
-
-## ✅ Obiettivo
-Realizzare una piccola API REST per la gestione di prenotazioni (Booking System).
-
-## 🚀 Funzionalità Richieste
-- CRUD per l'entità `Booking`
-- Associazione con entità `Customer`
-- Validazione degli input con Form Request
-- Middleware di autenticazione (Laravel Sanctum o token semplice)
-- Logging delle operazioni
-- Endpoint per esportazione CSV
-
-## 🧱 Requisiti Tecnici
-- Laravel 11+
-- PHP 8.3+
-- Service Layer / Action Classes
-- Repository Pattern
-- Design Patterns ove utili (es. Strategy, Factory)
-- Code Linting (PHP-CS-Fixer o Laravel Pint)
-- Analisi statica con PHPStan (livello 5+ consigliato)
-- Testing con PHPUnit
-
-## 🐳 Docker
-Il progetto deve funzionare tramite Docker:
-- PHP + Laravel
-- MySQL o PostgreSQL
-- phpMyAdmin (opzionale)
-
-### Esempio `compose.yml`
-```yaml
-version: '3.8'
-
-services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: laravel-app
-    container_name: laravel-app
-    restart: unless-stopped
-    working_dir: /var/www
-    volumes:
-      - .:/var/www
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-    networks:
-      - laravel
-
-  db:
-    image: mysql:8.0
-    container_name: laravel-db
-    restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: user
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
-    ports:
-      - "3306:3306"
-    volumes:
-      - dbdata:/var/lib/mysql
-    networks:
-      - laravel
-
-volumes:
-  dbdata:
-
-networks:
-  laravel:
-```
-
-### Esempio `Dockerfile`
-```Dockerfile
-FROM php:8.3-fpm
-
-# Installazioni base
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    git \
-    curl \
-    libzip-dev \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
-
-# Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-WORKDIR /var/www
-```
-
-## ⌛ Consegna
-- Crea un fork o clone del progetto
-- Crea una nuova branch con il tuo nome (`feature/nome-cognome`)
-- Esegui Commits coerenti e descrittivi
-- Invia il link alla tua repository entro 72h
-
-## 📎 Extra Opzionali
-- Seeder/Factory
-- Swagger o Postman Collection
-- CI/CD (GitHub Actions)
+A Laravel-based REST API for managing bookings and customers, with Dockerized setup and MySQL database support.
 
 ---
 
-In bocca al lupo!
+## 🚀 Getting Started
 
+Follow these steps to get the project up and running:
+
+### 1. Build and Start Docker Containers
+
+Use the provided `Makefile` to easily build and run the Docker containers:
+
+```bash
+make up
+```
+
+This will build and spin up the Laravel application and MySQL database containers.
+
+### 2. Set Up Environment File
+
+```bash
+cp .env.example .env
+```
+
+Make sure to update `.env` if needed (e.g., the DB host is usually `mysql` when using Docker Compose).
+
+### 3. Run Migrations
+
+To run database migrations, use the following command:
+
+```bash
+make migrate
+```
+
+This will reset and run the migrations to set up the database schema.
+
+### 4. Seed Initial Data
+
+To seed the database with sample user data:
+
+```bash
+make seed
+```
+
+This will run the `UserSeeder` to populate your database with the initial user data (email: admin@example.com, password: password)
+
+---
+
+## 🧪 Running Tests
+
+To run PHPUnit tests inside the Docker container:
+
+```bash
+make test
+```
+
+This will execute your tests and display the results.
+
+---
+
+## 🔧 Other Commands
+
+### 1. Destroy Docker Containers
+
+To stop and remove all Docker containers and volumes:
+
+```bash
+make down
+```
+
+### 2. Execute Script Inside Docker App Service
+
+To execute a custom script inside the Docker app container:
+
+```bash
+make exec-script CMD="php artisan cache:clear"
+```
+
+You can replace `"php artisan cache:clear"` with any custom script or artisan command.
+
+---
+
+## 📋 API Endpoints
+
+| Method | Endpoint        | Description         |
+|--------|------------------|---------------------|
+| GET    | `/api/customers` | List all customers  |
+| POST   | `/api/customers` | Create new customer |
+| GET    | `/api/bookings`  | List bookings       |
+| POST   | `/api/bookings`  | Create a booking    |
+
+(Full API docs available at `/api/docs`)
+
+---
+
+## ✅ Features
+
+- Laravel 12 + PHP 8.3+
+- Dockerized setup with MySQL
+- Repository pattern
+- Sanctum authentication (optional)
+- Form Request validation
+- Enum support for booking status
+- Unit tests with PHPUnit
+- Seeders and factories for testing
